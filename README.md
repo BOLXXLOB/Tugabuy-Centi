@@ -3,3 +3,7 @@ A TugaBuy é uma aplicação móvel de compra e venda de produtos, criada com o 
 A aplicação permite aos utilizadores consultar um catálogo de produtos, publicar os seus próprios anúncios e comunicar diretamente com outros utilizadores. Entre as funcionalidades principais incluem-se a visualização de artigos com detalhes, a criação e gestão de anúncios, um sistema de chat em tempo real para negociação, ferramentas de pesquisa e filtros, e a gestão do perfil do utilizador.
 
 O frontend da aplicação foi desenvolvido em Flutter, com ênfase numa interface simples, intuitiva e adaptada a qualquer dispositivo móvel. Para garantir eficiência e consistência visual, foram utilizados widgets reutilizáveis, além de uma gestão eficaz do estado da aplicação, assegurando fluidez e rapidez na navegação. A comunicação com o backend é realizada através de requisições HTTP e, no caso do chat, através de WebSockets. Por sua vez, o backend foi construído em Node.js utilizando o framework Express, seguindo o modelo REST para a estruturação da API, com endpoints bem definidos e documentação organizada. A base de dados principal é MongoDB, escolhida pela sua orientação a documentos, que proporciona flexibilidade na gestão dos dados dos utilizadores e produtos. Para o sistema de chat em tempo real, implementou-se o Socket.IO, permitindo a troca imediata de mensagens, que são armazenadas de forma persistente e associadas aos respetivos utilizadores.
+
+
+SWAGGER
+https://api.tugabuy.ss-centi.com/api-docs/
