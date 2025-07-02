@@ -1,0 +1,25 @@
+services:
+ 
+  traefik:
+    image: traefik:latest
+    hostname: traefik
+    container_name: traefik
+    restart: unless-stopped
+    networks:
+      - traefik-proxy
+    ports:
+      - 80:80 # HTTP
+      - 443:443 # HTTPS
+ 
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock # Docker internal volume
+      - ./traefik.yml:/traefik.yml # traefik config
+      - ./dynamic_config:/dynamic_config # traefik dynamic config
+      - ./acme.json:/acme.json # https certificate holder
+   
+ 
+networks:
+  traefik-proxy:
+    external: true
+ 
+ 

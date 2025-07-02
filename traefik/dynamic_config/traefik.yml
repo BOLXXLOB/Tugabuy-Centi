@@ -1,0 +1,20 @@
+http:
+  routers:
+    traefik:
+      rule: "Host(`traefik.tugabuy.ss-centi.com`)"
+      entryPoints:
+        - http
+      # middlewares:
+        # - auth
+        # - redirect
+      service: api@internal
+ 
+    traefik-secure:
+      rule: "Host(`traefik.tugabuy.ss-centi.com`)"
+      entryPoints:
+        - https
+    #   #middlewares:
+    #   #
+      tls:
+        certresolver: http
+      service: api@internal

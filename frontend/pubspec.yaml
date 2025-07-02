@@ -1,0 +1,42 @@
+name: farm4you
+description: A aplicação de combate ao desperdicio alimentar.
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.19.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  mysql1: ^0.20.0 
+  fl_chart: ^0.70.2  
+  http: ^1.2.2
+  font_awesome_flutter: ^10.7.0  # Pacote para ícones adicionais
+  cupertino_icons: ^1.0.8
+  provider: ^6.1.2  # Usado para gerenciamento de estado
+  shared_preferences: ^2.0.6  # Para armazenamento de preferências do usuário
+  intl: ^0.20.2  # Internacionalização
+  image_picker: ^1.1.2
+  mask_text_input_formatter: ^2.3.0
+  url_launcher: ^6.1.11
+  permission_handler: ^11.0.1
+  flutter_launcher_icons: ^0.10.0
+  cached_network_image: ^3.2.3
+flutter:
+  uses-material-design: true
+  generate: true
+  
+  assets:
+    - assets/images/image.png   
+  
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/images/image.png"
+
+fonts:
+  - family: MaterialIcons
+    fonts:
+      - asset: fonts/MaterialIcons-Regular.ttf
+     
+

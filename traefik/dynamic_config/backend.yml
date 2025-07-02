@@ -1,0 +1,25 @@
+http:
+  routers:
+    backend:
+      #rule: "Host(`localhost`)"
+      rule: "Host(`api.tugabuy.ss-centi.com`)"
+      entryPoints:
+        - http
+      middlewares:
+        - redirect
+      service: backend
+ 
+    backend-secure:
+      #rule: "Host(`localhost`)"
+      rule: "Host(`api.tugabuy.ss-centi.com`)"
+      entryPoints:
+        - https
+      tls:
+        certresolver: http
+      service: backend
+ 
+  services:
+    backend:
+      loadBalancer:
+        servers:
+          - url: http://backend:3000

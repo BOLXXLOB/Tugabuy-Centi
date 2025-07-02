@@ -1,0 +1,24 @@
+services:
+  backend:
+    build: ./
+    image: backend
+    container_name: backend
+    restart: unless-stopped
+    volumes:
+      - uploads:/code/build/uploads
+    networks:
+      - api-internal-network
+      - traefik-proxy
+    ports:                            
+      - "3000:3000"           
+
+
+volumes:
+  uploads:
+    driver: local
+
+networks:
+  api-internal-network:
+    external: true
+  traefik-proxy:
+    external: true

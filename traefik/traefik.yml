@@ -1,0 +1,31 @@
+api:
+  dashboard: true
+ 
+#log:
+#  level: DEBUG
+#  filePath: /access/access.log
+#  format: json
+ 
+entryPoints:
+  http:
+    address: ":80"
+  https:
+    address: ":443"
+  udp:
+    address: ":1681/udp"
+ 
+ 
+providers:
+  file:
+    directory: /dynamic_config
+    watch: true
+ 
+   
+ 
+certificatesResolvers:
+  http:
+    acme:
+      email: centi@centi.pt
+      storage: acme.json
+      httpChallenge:
+        entryPoint: http

@@ -1,0 +1,3576 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Tugabuy",
+    "description": "This page contains the documentation for the entire project API. It explains all the existing routes, how they are used and the various possible responses. With the right credentials you can test the routes.",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://api.tugabuy.ss-centi.com",
+      "description": "Server on AWS"
+    },
+    {
+      "url": "http://localhost",
+      "description": "Server on Docker"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "schemas": {
+      "User": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "example": "66fd6e1af196280b6cd9627e"
+          },
+          "name": {
+            "type": "string",
+            "example": "Jonh Doe"
+          },
+          "email": {
+            "type": "string",
+            "example": "user@example.com"
+          },
+          "password": {
+            "type": "string",
+            "example": "$2a$10$EDqgf/HJjZKqc8H/E3hte1w/TFDcv1CmBPbQsRKPgE0G1GHnHzMO"
+          },
+          "phone": {
+            "type": "number",
+            "example": "999 999 999"
+          },
+          "image": {
+            "type": "string",
+            "example": "profile.png"
+          },
+          "address": {
+            "type": "string",
+            "example": "Braga"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2024-11-21T13:59:42.944Z"
+          },
+          "__v": {
+            "type": "integer",
+            "example": 0
+          }
+        }
+      },
+      "UserAuth": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "example": "66fd6e1af196280b6cd9627e"
+          },
+          "name": {
+            "type": "string",
+            "example": "Jonh Doe"
+          },
+          "email": {
+            "type": "string",
+            "example": "user@example.com"
+          },
+          "phone": {
+            "type": "number",
+            "example": "999 999 999"
+          },
+          "image": {
+            "type": "string",
+            "example": "profile.png"
+          },
+          "address": {
+            "type": "string",
+            "example": "Braga"
+          },
+          "token": {
+            "type": "string",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2024-11-21T13:59:42.944Z"
+          }
+        }
+      },
+      "Category": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "example": "507f1f77bcf86cd799439011"
+          },
+          "desc": {
+            "type": "string",
+            "example": "Shoes"
+          },
+          "__v": {
+            "type": "integer",
+            "example": 0
+          }
+        }
+      },
+      "Product": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "example": "46fd6e1af19628de6cd9627e"
+          },
+          "name": {
+            "type": "string",
+            "example": "Nike Air force 1 Low"
+          },
+          "desc": {
+            "type": "string",
+            "example": "Size: 42 / Not used"
+          },
+          "price": {
+            "type": "number",
+            "example": "70"
+          },
+          "id_category": {
+            "type": "string",
+            "example": "507f1f77bcf86cd799439011"
+          },
+          "state": {
+            "type": "string",
+            "example": "Active"
+          },
+          "id_user": {
+            "type": "string",
+            "example": "66fd6e1af196280b6cd9627e"
+          },
+          "image": {
+            "type": "string",
+            "example": "product.png"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2024-11-21T13:59:42.944Z"
+          },
+          "__v": {
+            "type": "integer",
+            "example": 0
+          }
+        }
+      },
+      "Chat": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "example": "64a8f3e25bde312c8c2f9bd7"
+          },
+          "id_product": {
+            "type": "string",
+            "example": "46fd6e1af19628de6cd9627e"
+          },
+          "id_user": {
+            "type": "string",
+            "example": "66fd6e1af196280b6cd9627e"
+          },
+          "__v": {
+            "type": "integer",
+            "example": 0
+          }
+        }
+      },
+      "Message": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "example": "682f3d4273d7c744dec0f8ba"
+          },
+          "message": {
+            "type": "string",
+            "example": "Hello!"
+          },
+          "send_time": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2025-6-11T13:59:42.944Z"
+          },
+          "id_chat": {
+            "type": "string",
+            "example": "64a8f3e25bde312c8c2f9bd7"
+          },
+          "id_user": {
+            "type": "string",
+            "example": "66fd6e1af196280b6cd9627e"
+          },
+          "__v": {
+            "type": "integer",
+            "example": 0
+          }
+        }
+      }
+    }
+  },
+  "paths": {
+    "/auth/login": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Login",
+        "description": "Login to generate a token",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "example": "user@example.com"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "password123"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Login with sucess.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "httpCode": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "action": {
+                      "type": "string",
+                      "example": "Success"
+                    },
+                    "results": {
+                      "$ref": "#/components/schemas/UserAuth"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request body is missing",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "httpCode": {
+                      "type": "integer",
+                      "example": 400
+                    },
+                    "action": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "error": {
+                      "type": "string",
+                      "example": "Missing fields in request"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid credentials or user not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "httpCode": {
+                      "type": "integer",
+                      "example": 401
+                    },
+                    "action": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "error": {
+                      "type": "string",
+                      "example": "Invalid credentials"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/logout/{id}": {
+      "get": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Logout",
+        "description": "Function to delete the tokens",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "The ID of the user to logout.",
+            "schema": {
+              "type": "string",
+              "example": "66fd6e1af196280b6cd9627e"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Logout with sucess.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "httpCode": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "action": {
+                      "type": "string",
+                      "example": "Sucess"
+                    },
+                    "results": {
+                      "type": "string",
+                      "example": "Successfully logged out."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Invalid user ID.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "httpCode": {
+                      "type": "integer",
+                      "example": 404
+                    },
+                    "action": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "error": {
+                      "type": "string",
+                      "example": "User not found!"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Create a new User",
+        "description": "Create a new User ",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "example": "Jonh Doe"
+                  },
+                  "email": {
+                    "type": "string",
+                    "example": "user@example.com"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "123456789"
+                  },
+                  "phone": {
+                    "type": "number",
+                    "example": "999 999 999"
+                  },
+                  "image": {
+                    "type": "string",
+                    "example": "profile.png"
+                  },
+                  "address": {
+                    "type": "string",
+                    "example": "Braga"
+                  }
+                },
+                "required": [
+                  "name",
+                  "email",
+                  "password",
+                  "phone",
+                  "image",
+                  "address"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "User created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "httpCode": {
+                      "type": "integer",
+                      "example": 201
+                    },
+                    "action": {
+                      "type": "string",
+                      "example": "Sucess"
+                    },
+                    "results": {
+                      "$ref": "#/components/schemas/User"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request, missing required fields, duplicate email or phone number",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "httpCode": {
+                      "type": "integer",
+                      "example": 400
+                    },
+                    "action": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "error": {
+                      "type": "string",
+                      "example": "Email or phone number already in use"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity, error creating user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "httpCode": {
+                      "type": "integer",
+                      "example": 422
+                    },
+                    "action": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "error": {
+                      "type": "string",
+                      "example": "Error creating user"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Get all Users",
+        "description": "Get all Users in the database.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved users data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "httpCode": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "action": {
+                      "type": "string",
+                      "example": "Sucess"
+                    },
+                    "results": {
+                      "type": "object",
+                      "properties": {
+                        "page": {
+                          "type": "integer",
+                          "example": 1
+                        },
+                        "last_page": {
+                          "type": "integer",
+                          "example": 1
+                        },
+                        "limit_per_page": {
+                          "type": "integer",
+                          "example": 25
+                        },
+                        "docs_in_page": {
+                          "type": "integer",
+                          "example": 1
+                        },
+                        "total_docs": {
+                          "type": "integer",
+                          "example": 1
+                        },
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/User"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Access Denied, missing or invalid token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "httpCode": {
+                      "type": "integer",
+                      "example": 403
+                    },
+                    "action": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "error": {
+                      "type": "string",
+                      "example": "Access denied!"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/{id}": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Get user by ID",
+        "description": "This endpoint retrieves a user by their ID. It first checks the Redis cache for the user's data. If found, it returns the data from the cache. If not found in cache, it queries the MongoDB database and stores the result in Redis for future use.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "The ID of the user to retrieve.",
+            "schema": {
+              "type": "string",
+              "example": "66fd6e1af196280b6cd9627e"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User found and returned successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "httpCode": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "action": {
+                      "type": "string",
+                      "example": "Sucess"
+                    },
+                    "results": {
+                      "$ref": "#/components/schemas/User"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Access Denied, missing or invalid token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "httpCode": {
+                      "type": "integer",
+                      "example": 403
+                    },
+                    "action": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "error": {
+                      "type": "string",
+                      "example": "Access denied!"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "httpCode": {
+                      "type": "integer",
+                      "example": 404
+                    },
+                    "action": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "error": {
+                      "type": "string",
+                      "example": "No user with id: 66fd6e1af196280b6cd9627e"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Delete a user by ID",
+        "description": "This endpoint delete a user by ID",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "The ID of the user to retrieve.",
+            "schema": {
+              "type": "string",
+              "example": "66fd6e1af196280b6cd9627e"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "User deleted successfully"
+          },
+          "403": {
+            "description": "Access Denied, missing or invalid token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "httpCode": {
+                      "type": "integer",
+                      "example": 403
+                    },
+                    "action": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "error": {
+                      "type": "string",
+                      "example": "Access denied!"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "httpCode": {
+                      "type": "integer",
+                      "example": 404
+                    },
+                    "action": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "error": {
+                      "type": "string",
+                      "example": "No user with id: {id}"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Update user by ID",
+        "description": "This endpoint update user data by ID.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "The ID of user to update",
+            "schema": {
+              "type": "string",
+              "example": "66fd6e1af196280b6cd9627e"
+            }
+          },
+          {
+            "in": "body",
+            "name": "user",
+            "required": true,
+            "description": "User data allowed to update",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "address": {
+                  "type": "string",
+                  "example": "newPassword123"
+                },
+                "email": {
+                  "type": "string",
+                  "example": "user@example.com"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User updated with sucess",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "httpCode": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "action": {
+                      "type": "string",
+                      "example": "Sucess"
+                    },
+                    "results": {
+                      "$ref": "#/components/schemas/User"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Access Denied, missing or invalid token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "httpCode": {
+                      "type": "integer",
+                      "example": 403
+                    },
+                    "action": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "error": {
+                      "type": "string",
+                      "example": "Access denied!"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid update options provided",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "httpCode": {
+                      "type": "integer",
+                      "example": 400
+                    },
+                    "action": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "error": {
+                      "type": "string",
+                      "example": "Invalid update options provided."
+                    }
+                  }
+                }
+              }
+            }
+          },"409": {
+            "description": "Email or phone number already in use",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "httpCode": {
+                      "type": "integer",
+                      "example": 409
+                    },
+                    "action": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "error": {
+                      "type": "string",
+                      "example": "Email or phone number already in use."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/categories": {
+      "post": {
+        "tags": [
+          "Category"
+        ],
+        "summary": "Create a new Category",
+        "description": "Create a new Category",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "desc": {
+                    "type": "string",
+                    "example": "Shoes"
+                  }
+                },
+                "required": [
+                  "desc"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Category created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "httpCode": {
+                      "type": "integer",
+                      "example": 201
+                    },
+                    "action": {
+                      "type": "string",
+                      "example": "Sucess"
+                    },
+                    "results": {
+                      "$ref": "#/components/schemas/Category"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request, missing required fields or category already exists",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "httpCode": {
+                      "type": "integer",
+                      "example": 400
+                    },
+                    "action": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "error": {
+                      "type": "string",
+                      "example": "This category already exists"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity, error creating category",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "httpCode": {
+                      "type": "integer",
+                      "example": 422
+                    },
+                    "action": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "error": {
+                      "type": "string",
+                      "example": "Error creating category"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Category"
+        ],
+        "summary": "Get all Categories",
+        "description": "Get all the categories in the database ",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved categories data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "httpCode": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "action": {
+                      "type": "string",
+                      "example": "Sucess"
+                    },
+                    "results": {
+                      "type": "object",
+                      "properties": {
+                        "page": {
+                          "type": "integer",
+                          "example": 1
+                        },
+                        "last_page": {
+                          "type": "integer",
+                          "example": 1
+                        },
+                        "limit_per_page": {
+                          "type": "integer",
+                          "example": 25
+                        },
+                        "docs_in_page": {
+                          "type": "integer",
+                          "example": 1
+                        },
+                        "total_docs": {
+                          "type": "integer",
+                          "example": 1
+                        },
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Category"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Access Denied, missing or invalid token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "httpCode": {
+                      "type": "integer",
+                      "example": 403
+                    },
+                    "action": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "error": {
+                      "type": "string",
+                      "example": "Access denied!"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/categories/{id}": {
+      "get": {
+        "tags": [
+          "Category"
+        ],
+        "summary": "Get category by ID",
+        "description": "This endpoint retrieves a category by their ID. It first checks the Redis cache for the category's data. If found, it returns the data from the cache. If not found in cache, it queries the MongoDB database and stores the result in Redis for future use.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "The ID of the category to retrieve.",
+            "schema": {
+              "type": "string",
+              "example": "507f1f77bcf86cd799439011"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Category found and returned successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "httpCode": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "action": {
+                      "type": "string",
+                      "example": "Sucess"
+                    },
+                    "results": {
+                      "$ref": "#/components/schemas/Category"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Access Denied, missing or invalid token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "httpCode": {
+                      "type": "integer",
+                      "example": 403
+                    },
+                    "action": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "error": {
+                      "type": "string",
+                      "example": "Access denied!"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Category not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "httpCode": {
+                      "type": "integer",
+                      "example": 404
+                    },
+                    "action": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "error": {
+                      "type": "string",
+                      "example": "No category with id: 507f1f77bcf86cd799439011"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Category"
+        ],
+        "summary": "Delete a category by ID",
+        "description": "This endpoint delete a category by ID",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "The ID of the category to retrieve.",
+            "schema": {
+              "type": "string",
+              "example": "507f1f77bcf86cd799439011"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Category deleted successfully"
+          },
+          "403": {
+            "description": "Access Denied, missing or invalid token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "httpCode": {
+                      "type": "integer",
+                      "example": 403
+                    },
+                    "action": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "error": {
+                      "type": "string",
+                      "example": "Access denied!"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Category not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "httpCode": {
+                      "type": "integer",
+                      "example": 404
+                    },
+                    "action": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "error": {
+                      "type": "string",
+                      "example": "No user with id: {id}"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Category"
+        ],
+        "summary": "Update category by ID",
+        "description": "This endpoint update category data by ID.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "The ID of category to update",
+            "schema": {
+              "type": "string",
+              "example": "507f1f77bcf86cd799439011"
+            }
+          },
+          {
+            "in": "body",
+            "name": "category",
+            "required": true,
+            "description": "Category data allowed to update",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "desc": {
+                  "type": "string",
+                  "example": "Sports"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Category updated with sucess",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "httpCode": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "action": {
+                      "type": "string",
+                      "example": "Sucess"
+                    },
+                    "results": {
+                      "$ref": "#/components/schemas/Category"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Access Denied, missing or invalid token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "httpCode": {
+                      "type": "integer",
+                      "example": 403
+                    },
+                    "action": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "error": {
+                      "type": "string",
+                      "example": "Access denied!"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid update options provided.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "httpCode": {
+                      "type": "integer",
+                      "example": 400
+                    },
+                    "action": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "error": {
+                      "type": "string",
+                      "example": "Invalid update options provided."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Category already exists.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "httpCode": {
+                      "type": "integer",
+                      "example": 409
+                    },
+                    "action": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "error": {
+                      "type": "string",
+                      "example": "Category already exists."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/products": {
+      "post": {
+        "tags": [
+          "Product"
+        ],
+        "summary": "Create a Product",
+        "description": "This endpoint creates a product. ",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "example": "Nike Air force 1 Low"
+                  },
+                  "desc": {
+                    "type": "string",
+                    "example": "Size: 42 / Not used"
+                  },
+                  "price": {
+                    "type": "number",
+                    "example": "70"
+                  },
+                  "id_category": {
+                    "type": "string",
+                    "example": "507f1f77bcf86cd799439011"
+                  },
+                  "state": {
+                    "type": "string",
+                    "example": "Active"
+                  },
+                  "id_user": {
+                    "type": "string",
+                    "example": "66fd6e1af196280b6cd9627e"
+                  },
+                  "image": {
+                    "type": "string",
+                    "example": "product.png"
+                  },
+                  "created_at": {
+                    "type": "string",
+                    "format": "date-time",
+                    "example": "2024-11-21T13:59:42.944Z"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Product created with sucess",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "httpCode": {
+                      "type": "integer",
+                      "example": 201
+                    },
+                    "action": {
+                      "type": "string",
+                      "example": "Sucess"
+                    },
+                    "results": {
+                      "$ref": "#/components/schemas/Product"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request, missing required fields",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "httpCode": {
+                      "type": "integer",
+                      "example": 400
+                    },
+                    "action": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "error": {
+                      "type": "string",
+                      "example": "Missing required field in the request"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Access Denied, missing or invalid token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "httpCode": {
+                      "type": "integer",
+                      "example": 403
+                    },
+                    "action": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "error": {
+                      "type": "string",
+                      "example": "Access denied!"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity, error creating products",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "httpCode": {
+                      "type": "integer",
+                      "example": 422
+                    },
+                    "action": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "error": {
+                      "type": "string",
+                      "example": "Error creating a product"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "User or category does not exist.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "httpCode": {
+                      "type": "integer",
+                      "example": 409
+                    },
+                    "action": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "error": {
+                      "type": "string",
+                      "example": "User or category does not exist."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Product"
+        ],
+        "summary": "Get all Products",
+        "description": "Get all the products in the database.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved products data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "httpCode": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "action": {
+                      "type": "string",
+                      "example": "Sucess"
+                    },
+                    "results": {
+                      "type": "object",
+                      "properties": {
+                        "page": {
+                          "type": "integer",
+                          "example": 1
+                        },
+                        "last_page": {
+                          "type": "integer",
+                          "example": 1
+                        },
+                        "limit_per_page": {
+                          "type": "integer",
+                          "example": 25
+                        },
+                        "docs_in_page": {
+                          "type": "integer",
+                          "example": 1
+                        },
+                        "total_docs": {
+                          "type": "integer",
+                          "example": 1
+                        },
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Product"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Access Denied, missing or invalid token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "httpCode": {
+                      "type": "integer",
+                      "example": 403
+                    },
+                    "action": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "error": {
+                      "type": "string",
+                      "example": "Access denied!"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/products/{id}": {
+      "get": {
+        "tags": [
+          "Product"
+        ],
+        "summary": "Get product by ID",
+        "description": "This endpoint retrieves a product by their ID. It first checks the Redis cache for the product's data. If found, it returns the data from the cache. If not found in cache, it queries the MongoDB database and stores the result in Redis for future use.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "The ID of the product to retrieve.",
+            "schema": {
+              "type": "string",
+              "example": "46fd6e1af19628de6cd9627e"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Product found and returned successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "httpCode": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "action": {
+                      "type": "string",
+                      "example": "Sucess"
+                    },
+                    "results": {
+                      "$ref": "#/components/schemas/Product"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Access Denied, missing or invalid token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "httpCode": {
+                      "type": "integer",
+                      "example": 403
+                    },
+                    "action": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "error": {
+                      "type": "string",
+                      "example": "Access denied!"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Product not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "httpCode": {
+                      "type": "integer",
+                      "example": 404
+                    },
+                    "action": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "error": {
+                      "type": "string",
+                      "example": "No product with id: 46fd6e1af19628de6cd9627e"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Product"
+        ],
+        "summary": "Delete a product by ID",
+        "description": "This endpoint delete a product by ID",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "The ID of the product to retrieve.",
+            "schema": {
+              "type": "string",
+              "example": "46fd6e1af19628de6cd9627e"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Product deleted successfully"
+          },
+          "403": {
+            "description": "Access Denied, missing or invalid token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "httpCode": {
+                      "type": "integer",
+                      "example": 403
+                    },
+                    "action": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "error": {
+                      "type": "string",
+                      "example": "Access denied!"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Product not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "httpCode": {
+                      "type": "integer",
+                      "example": 404
+                    },
+                    "action": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "error": {
+                      "type": "string",
+                      "example": "No product with id: {id}"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Product"
+        ],
+        "summary": "Update product by ID",
+        "description": "This endpoint update product data by ID.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "The ID of product to update",
+            "schema": {
+              "type": "string",
+              "example": "46fd6e1af19628de6cd9627e"
+            }
+          },
+          {
+            "in": "body",
+            "name": "product",
+            "required": true,
+            "description": "Product data allowed to update",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "Nike Air force 1 Low"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Product updated with sucess",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "httpCode": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "action": {
+                      "type": "string",
+                      "example": "Sucess"
+                    },
+                    "results": {
+                      "$ref": "#/components/schemas/Product"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Access Denied, missing or invalid token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "httpCode": {
+                      "type": "integer",
+                      "example": 403
+                    },
+                    "action": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "error": {
+                      "type": "string",
+                      "example": "Access denied!"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid update options provided.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "httpCode": {
+                      "type": "integer",
+                      "example": 400
+                    },
+                    "action": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "error": {
+                      "type": "string",
+                      "example": "Invalid update options provided."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "User or category does not exist.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "httpCode": {
+                      "type": "integer",
+                      "example": 409
+                    },
+                    "action": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "error": {
+                      "type": "string",
+                      "example": "User or category does not exist."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/products/category/{categoryId}": {
+      "get": {
+        "tags": [
+          "Product"
+        ],
+        "summary": "Get product by Category ID",
+        "description": "This endpoint retrieves a product by category ID. It first checks the Redis cache for the product's data. If found, it returns the data from the cache. If not found in cache, it queries the MongoDB database and stores the result in Redis for future use.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "The ID of the category to retrieve.",
+            "schema": {
+              "type": "string",
+              "example": "507f1f77bcf86cd799439011"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Products found and returned successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "httpCode": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "action": {
+                      "type": "string",
+                      "example": "Sucess"
+                    },
+                    "results": {
+                      "$ref": "#/components/schemas/Product"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Access Denied, missing or invalid token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "httpCode": {
+                      "type": "integer",
+                      "example": 403
+                    },
+                    "action": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "error": {
+                      "type": "string",
+                      "example": "Access denied!"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Products not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "httpCode": {
+                      "type": "integer",
+                      "example": 404
+                    },
+                    "action": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "error": {
+                      "type": "string",
+                      "example": "No products found with category id: 507f1f77bcf86cd799439011"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/products/user/{userId}": {
+      "get": {
+        "tags": [
+          "Product"
+        ],
+        "summary": "Get product by User ID",
+        "description": "This endpoint retrieves a product by user ID. It first checks the Redis cache for the product's data. If found, it returns the data from the cache. If not found in cache, it queries the MongoDB database and stores the result in Redis for future use.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "The ID of the user to retrieve.",
+            "schema": {
+              "type": "string",
+              "example": "66fd6e1af196280b6cd9627e"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Products found and returned successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "httpCode": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "action": {
+                      "type": "string",
+                      "example": "Sucess"
+                    },
+                    "results": {
+                      "$ref": "#/components/schemas/Product"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Access Denied, missing or invalid token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "httpCode": {
+                      "type": "integer",
+                      "example": 403
+                    },
+                    "action": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "error": {
+                      "type": "string",
+                      "example": "Access denied!"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Products not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "httpCode": {
+                      "type": "integer",
+                      "example": 404
+                    },
+                    "action": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "error": {
+                      "type": "string",
+                      "example": "No products found with user id: 66fd6e1af196280b6cd9627e"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/products/products": {
+      "get": {
+        "tags": [
+          "Product"
+        ],
+        "summary": "Get all products except the authenticated user's",
+        "description": "Retrieves all products whose id_user is not equal to the currently logged-in user's ID.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of products not belonging to the authenticated user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Product"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - user is not authenticated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Unauthorized: User not logged in"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error while fetching products",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Server error while fetching products"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/chats": {
+      "post": {
+        "tags": [
+          "Chat"
+        ],
+        "summary": "Create a Chat",
+        "description": "This endpoint creates a chat. ",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id_product": {
+                    "type": "string",
+                    "example": "46fd6e1af19628de6cd9627e"
+                  },
+                  "id_user": {
+                    "type": "string",
+                    "example": "66fd6e1af196280b6cd9627e"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Chat created with sucess",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "httpCode": {
+                      "type": "integer",
+                      "example": 201
+                    },
+                    "action": {
+                      "type": "string",
+                      "example": "Sucess"
+                    },
+                    "results": {
+                      "$ref": "#/components/schemas/Chat"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request, missing required fields",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "httpCode": {
+                      "type": "integer",
+                      "example": 400
+                    },
+                    "action": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "error": {
+                      "type": "string",
+                      "example": "Missing required field in the request"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Access Denied, missing or invalid token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "httpCode": {
+                      "type": "integer",
+                      "example": 403
+                    },
+                    "action": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "error": {
+                      "type": "string",
+                      "example": "Access denied!"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User or product's owner not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "httpCode": {
+                      "type": "integer",
+                      "example": 404
+                    },
+                    "action": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "error": {
+                      "type": "string",
+                      "example": "User or product's owner not found."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity, error creating chats",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "httpCode": {
+                      "type": "integer",
+                      "example": 422
+                    },
+                    "action": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "error": {
+                      "type": "string",
+                      "example": "Error creating a chat"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Chat"
+        ],
+        "summary": "Get all Chats",
+        "description": "Get all the chats in the database.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved chats data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "httpCode": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "action": {
+                      "type": "string",
+                      "example": "Sucess"
+                    },
+                    "results": {
+                      "type": "object",
+                      "properties": {
+                        "page": {
+                          "type": "integer",
+                          "example": 1
+                        },
+                        "last_page": {
+                          "type": "integer",
+                          "example": 1
+                        },
+                        "limit_per_page": {
+                          "type": "integer",
+                          "example": 25
+                        },
+                        "docs_in_page": {
+                          "type": "integer",
+                          "example": 1
+                        },
+                        "total_docs": {
+                          "type": "integer",
+                          "example": 1
+                        },
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Chat"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Access Denied, missing or invalid token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "httpCode": {
+                      "type": "integer",
+                      "example": 403
+                    },
+                    "action": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "error": {
+                      "type": "string",
+                      "example": "Access denied!"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/chats/{id}": {
+      "get": {
+        "tags": [
+          "Chat"
+        ],
+        "summary": "Get chat by ID",
+        "description": "This endpoint retrieves a chat by their ID. It first checks the Redis cache for the chat's data. If found, it returns the data from the cache. If not found in cache, it queries the MongoDB database and stores the result in Redis for future use.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "The ID of the chat to retrieve.",
+            "schema": {
+              "type": "string",
+              "example": "64a8f3e25bde312c8c2f9bd7"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Chat found and returned successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "httpCode": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "action": {
+                      "type": "string",
+                      "example": "Sucess"
+                    },
+                    "results": {
+                      "$ref": "#/components/schemas/Chat"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Access Denied, missing or invalid token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "httpCode": {
+                      "type": "integer",
+                      "example": 403
+                    },
+                    "action": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "error": {
+                      "type": "string",
+                      "example": "Access denied!"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Chat not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "httpCode": {
+                      "type": "integer",
+                      "example": 404
+                    },
+                    "action": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "error": {
+                      "type": "string",
+                      "example": "No product with id: 64a8f3e25bde312c8c2f9bd7"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Chat"
+        ],
+        "summary": "Delete a chat by ID",
+        "description": "This endpoint delete a chat by ID",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "The ID of the chat to retrieve.",
+            "schema": {
+              "type": "string",
+              "example": "64a8f3e25bde312c8c2f9bd7"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Chat deleted successfully"
+          },
+          "403": {
+            "description": "Access Denied, missing or invalid token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "httpCode": {
+                      "type": "integer",
+                      "example": 403
+                    },
+                    "action": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "error": {
+                      "type": "string",
+                      "example": "Access denied!"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Chat not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "httpCode": {
+                      "type": "integer",
+                      "example": 404
+                    },
+                    "action": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "error": {
+                      "type": "string",
+                      "example": "No user with id: {id}"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/chats/user/{userId}": {
+      "get": {
+        "tags": [
+          "Chat"
+        ],
+        "summary": "Get chat by User ID",
+        "description": "This endpoint retrieves a chat by user ID. It first checks the Redis cache for the chat's data. If found, it returns the data from the cache. If not found in cache, it queries the MongoDB database and stores the result in Redis for future use.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "The ID of the user to retrieve.",
+            "schema": {
+              "type": "string",
+              "example": "66fd6e1af196280b6cd9627e"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Chats found and returned successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "httpCode": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "action": {
+                      "type": "string",
+                      "example": "Sucess"
+                    },
+                    "results": {
+                      "$ref": "#/components/schemas/Chat"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Access Denied, missing or invalid token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "httpCode": {
+                      "type": "integer",
+                      "example": 403
+                    },
+                    "action": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "error": {
+                      "type": "string",
+                      "example": "Access denied!"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Chats not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "httpCode": {
+                      "type": "integer",
+                      "example": 404
+                    },
+                    "action": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "error": {
+                      "type": "string",
+                      "example": "No chats found with user id: 66fd6e1af196280b6cd9627e"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/chats/owner/{ownerId}": {
+      "get": {
+        "tags": [
+          "Chat"
+        ],
+        "summary": "Get chat by product's Owner ID",
+        "description": "This endpoint retrieves a chat by product's owner ID. It first checks the Redis cache for the chat's data. If found, it returns the data from the cache. If not found in cache, it queries the MongoDB database and stores the result in Redis for future use.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "The ID of the product's owner to retrieve.",
+            "schema": {
+              "type": "string",
+              "example": "66fd6e1af196280b6cd9627e"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Chats found and returned successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "httpCode": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "action": {
+                      "type": "string",
+                      "example": "Sucess"
+                    },
+                    "results": {
+                      "$ref": "#/components/schemas/Chat"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Access Denied, missing or invalid token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "httpCode": {
+                      "type": "integer",
+                      "example": 403
+                    },
+                    "action": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "error": {
+                      "type": "string",
+                      "example": "Access denied!"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Chats not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "httpCode": {
+                      "type": "integer",
+                      "example": 404
+                    },
+                    "action": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "error": {
+                      "type": "string",
+                      "example": "No chats found with user id: 66fd6e1af196280b6cd9627e"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/messages": {
+      "post": {
+        "tags": [
+          "Message"
+        ],
+        "summary": "Create a Message",
+        "description": "This endpoint creates a Message. ",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "message": {
+                    "type": "string",
+                    "example": "46fd6e1af19628de6cd9627e"
+                  },
+                  "send_time": {
+                    "type": "string",
+                    "format": "date-time",
+                    "example": "2024-11-21T13:59:42.944Z"
+                  },
+                  "id_chat": {
+                    "type": "string",
+                    "example": "64a8f3e25bde312c8c2f9bd7"
+                  },
+                  "id_user": {
+                    "type": "string",
+                    "example": "66fd6e1af196280b6cd9627e"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Message created with sucess",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "httpCode": {
+                      "type": "integer",
+                      "example": 201
+                    },
+                    "action": {
+                      "type": "string",
+                      "example": "Sucess"
+                    },
+                    "results": {
+                      "$ref": "#/components/schemas/Message"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request, missing required fields",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "httpCode": {
+                      "type": "integer",
+                      "example": 400
+                    },
+                    "action": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "error": {
+                      "type": "string",
+                      "example": "Missing required field in the request"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Access Denied, missing or invalid token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "httpCode": {
+                      "type": "integer",
+                      "example": 403
+                    },
+                    "action": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "error": {
+                      "type": "string",
+                      "example": "Access denied!"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "User or chat does not exist.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "httpCode": {
+                      "type": "integer",
+                      "example": 409
+                    },
+                    "action": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "error": {
+                      "type": "string",
+                      "example": "User or chat does not exist."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity, error creating message",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "httpCode": {
+                      "type": "integer",
+                      "example": 422
+                    },
+                    "action": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "error": {
+                      "type": "string",
+                      "example": "Error creating a message"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Message"
+        ],
+        "summary": "Get all Messages",
+        "description": "Get all the messages in the database.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved messages data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "httpCode": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "action": {
+                      "type": "string",
+                      "example": "Sucess"
+                    },
+                    "results": {
+                      "type": "object",
+                      "properties": {
+                        "page": {
+                          "type": "integer",
+                          "example": 1
+                        },
+                        "last_page": {
+                          "type": "integer",
+                          "example": 1
+                        },
+                        "limit_per_page": {
+                          "type": "integer",
+                          "example": 25
+                        },
+                        "docs_in_page": {
+                          "type": "integer",
+                          "example": 1
+                        },
+                        "total_docs": {
+                          "type": "integer",
+                          "example": 1
+                        },
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Message"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Access Denied, missing or invalid token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "httpCode": {
+                      "type": "integer",
+                      "example": 403
+                    },
+                    "action": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "error": {
+                      "type": "string",
+                      "example": "Access denied!"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/messages/{id}": {
+      "get": {
+        "tags": [
+          "Message"
+        ],
+        "summary": "Get message by ID",
+        "description": "This endpoint retrieves a message by their ID. It first checks the Redis cache for the message's data. If found, it returns the data from the cache. If not found in cache, it queries the MongoDB database and stores the result in Redis for future use.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "The ID of the message to retrieve.",
+            "schema": {
+              "type": "string",
+              "example": "682f3d4273d7c744dec0f8ba"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Message found and returned successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "httpCode": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "action": {
+                      "type": "string",
+                      "example": "Sucess"
+                    },
+                    "results": {
+                      "$ref": "#/components/schemas/Message"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Access Denied, missing or invalid token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "httpCode": {
+                      "type": "integer",
+                      "example": 403
+                    },
+                    "action": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "error": {
+                      "type": "string",
+                      "example": "Access denied!"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Message not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "httpCode": {
+                      "type": "integer",
+                      "example": 404
+                    },
+                    "action": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "error": {
+                      "type": "string",
+                      "example": "No message with id: 682f3d4273d7c744dec0f8ba"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Message"
+        ],
+        "summary": "Delete a message by ID",
+        "description": "This endpoint delete a message by ID",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "The ID of the message to retrieve.",
+            "schema": {
+              "type": "string",
+              "example": "682f3d4273d7c744dec0f8ba"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Message deleted successfully"
+          },
+          "403": {
+            "description": "Access Denied, missing or invalid token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "httpCode": {
+                      "type": "integer",
+                      "example": 403
+                    },
+                    "action": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "error": {
+                      "type": "string",
+                      "example": "Access denied!"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Message not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "httpCode": {
+                      "type": "integer",
+                      "example": 404
+                    },
+                    "action": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "error": {
+                      "type": "string",
+                      "example": "No message with id: {id}"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Message"
+        ],
+        "summary": "Update message by ID",
+        "description": "This endpoint update messages by ID.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "The ID of message to update",
+            "schema": {
+              "type": "string",
+              "example": "682f3d4273d7c744dec0f8ba"
+            }
+          },
+          {
+            "in": "body",
+            "name": "message",
+            "required": true,
+            "description": "Message data allowed to update",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Hello"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Message updated with sucess",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "httpCode": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "action": {
+                      "type": "string",
+                      "example": "Sucess"
+                    },
+                    "results": {
+                      "$ref": "#/components/schemas/Message"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Access Denied, missing or invalid token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "httpCode": {
+                      "type": "integer",
+                      "example": 403
+                    },
+                    "action": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "error": {
+                      "type": "string",
+                      "example": "Access denied!"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid update options provided.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "httpCode": {
+                      "type": "integer",
+                      "example": 400
+                    },
+                    "action": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "error": {
+                      "type": "string",
+                      "example": "Invalid update options provided."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "User or chat does not exist.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "httpCode": {
+                      "type": "integer",
+                      "example": 409
+                    },
+                    "action": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "error": {
+                      "type": "string",
+                      "example": "User or chat does not exist."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/messages/chat/{chatId}": {
+      "get": {
+        "tags": [
+          "Message"
+        ],
+        "summary": "Get messages by Chat ID",
+        "description": "This endpoint retrieves messages by chat ID. It first checks the Redis cache for the messages's data. If found, it returns the data from the cache. If not found in cache, it queries the MongoDB database and stores the result in Redis for future use.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "The ID of the chat to retrieve.",
+            "schema": {
+              "type": "string",
+              "example": "64a8f3e25bde312c8c2f9bd7"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Messages found and returned successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "httpCode": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "action": {
+                      "type": "string",
+                      "example": "Sucess"
+                    },
+                    "results": {
+                      "$ref": "#/components/schemas/Message"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Access Denied, missing or invalid token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "httpCode": {
+                      "type": "integer",
+                      "example": 403
+                    },
+                    "action": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "error": {
+                      "type": "string",
+                      "example": "Access denied!"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Messages not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "httpCode": {
+                      "type": "integer",
+                      "example": 404
+                    },
+                    "action": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "error": {
+                      "type": "string",
+                      "example": "No messages found with chat id: 64a8f3e25bde312c8c2f9bd7"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing chat in request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "httpCode": {
+                      "type": "integer",
+                      "example": 400
+                    },
+                    "action": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "error": {
+                      "type": "string",
+                      "example": "Missing chat in request."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
